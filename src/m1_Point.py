@@ -52,6 +52,7 @@ class Point(object):
         self.count = 0
         self.startx = x
         self.starty = y
+        self.moves_made = 0
 
     def __repr__(self):
         return 'Point({},{})'.format(self.x, self.y)
@@ -60,14 +61,22 @@ class Point(object):
         return Point(self.x, self.y)
 
     def move_to(self, x, y):
+        self.oldx = self.x
+        self.oldy = self.y
         self.x = x
         self.y = y
         self.count = self.count + 1
+        dx = self.oldx - x
+        dy = self.oldy - y
+        distance = (((dx**2)+(dy**2))**0.5)
+        self.moves_made = self.moves_made + distance
 
     def move_by(self, dx, dy):
         self.x = self.x + dx
         self.y = self.y + dy
         self.count = self.count + 1
+        distance = (((dx**2)+(dy**2))**0.5)
+        self.moves_made = self.moves_made + distance
 
 
     def get_number_of_moves_made(self):
@@ -81,9 +90,25 @@ class Point(object):
     def get_distance_from_start(self):
         dx = self.startx - self.x
         dy = self.starty - self.y
+
         return(((dx**2)+(dy**2))**0.5)
 
     def get_distance_traveled(self):
+        return self.moves_made
+
+    def closer_to(self, p2, p3):
+        dx1 = self.x - p2.x
+        dy1 = self.y - p2.y
+        distance1 = (((dx1**2)+(dy1**2))**0.5)
+
+        dx2 = self.x - p3.x
+        dy2 = self.y - p3.y
+        distance2 = (((dx2**2)+(dy2**2))**0.5)
+
+        if distance1 <= distance2:
+            return p2
+        else:
+            return p3
 
 
 
@@ -496,7 +521,7 @@ def run_test_move_by():
             print('** in fact, it returned:', check_has_no_return)
         """
     # --------------------------------------------------------------------------
-    # TODO: 7.  Follow the same instructions as in _TODO_ 3 above,
+    # DONE: 7.  Follow the same instructions as in _TODO_ 3 above,
     #           but for the  move_by  method specified above.
     # --------------------------------------------------------------------------
     print()
@@ -983,7 +1008,7 @@ def run_test_closer_to():
         print('Actual:  ', p1.closer_to(p4, p5) is p5)
     """
     # --------------------------------------------------------------------------
-    # TODO: 12.  Follow the same instructions as in TO-DO 3 above,
+    # DONE: 12.  Follow the same instructions as in TO-DO 3 above,
     #    but for the  closer_to  method specified above.
     # --------------------------------------------------------------------------
     print()
@@ -991,6 +1016,33 @@ def run_test_closer_to():
     print('Testing the   closer_to   method of the Point class.')
     print('-----------------------------------------------------------')
 
+    p1 = Point(10, 20)
+    p2 = Point(15, 20)
+    p3 = Point(14, 24)
+
+    print()
+    print('Expected:', p2)
+    print('Actual:  ', p1.closer_to(p2, p3))
+    print('Expected:', p2)
+    print('Actual:  ', p1.closer_to(p3, p2))
+
+    print()
+    print('Expected:', p1)
+    print('Actual:  ', p1.closer_to(p1, p3))
+    print('Expected:', p2)
+    print('Actual:  ', p2.closer_to(p3, p2))
+    print('Expected:', p3)
+    print('Actual:  ', p3.closer_to(p3, p3))
+
+    print()
+    p4 = p1.clone()
+    p5 = p1.clone()
+    print('Expected:', p4)
+    print('Actual:  ', p1.closer_to(p4, p5))
+    print('Expected: True')
+    print('Actual:  ', p1.closer_to(p4, p5) is p4)
+    print('Expected: False')
+    print('Actual:  ', p1.closer_to(p4, p5) is p5)
 
 def run_test_halfway_to():
     """
