@@ -28,10 +28,10 @@ def main():
 
 # ------------------------------------------------------------------------------
 # DONE: 2.          With your instructor, READ THE INSTRUCTIONS in
-# TODO (continued)  in file  m0_INSTRUCTIONS.txt, asking questions as needed.
+# DONE (continued)  in file  m0_INSTRUCTIONS.txt, asking questions as needed.
 #
-# TODO (continued): Then implement a class called   Point that has NO METHODS
-# TODO (continued)  yet, just the lines that start the definition of any class:
+# DONE (continued): Then implement a class called   Point that has NO METHODS
+# DONE (continued)  yet, just the lines that start the definition of any class:
 #
 #      class NAME_OF_CLASS(object):
 #          """ Brief description of what objects of the class 'are'."""
@@ -110,6 +110,10 @@ class Point(object):
         else:
             return p3
 
+    def halfway_to(self, p2):
+        x_coordinate = (self.x + p2.x) * 0.5
+        y_coordinate = (self.y + p2.y) * 0.5
+        return 'Point({},{})'.format(x_coordinate, y_coordinate)
 
 
 def run_test_init():
@@ -1091,13 +1095,40 @@ def run_test_halfway_to():
 
     """
     # --------------------------------------------------------------------------
-    # TODO: 13.  Follow the same instructions as in TO-DO 3 above,
+    # DONE: 13.  Follow the same instructions as in TO-DO 3 above,
     #    but for the  halfway_to  method specified above.
     # --------------------------------------------------------------------------
     print()
     print('-----------------------------------------------------------')
     print('Testing the   halfway_to   method of the Point class.')
     print('-----------------------------------------------------------')
+
+    p1 = Point(10, 20)
+    p2 = Point(30, 100)
+
+    print()
+    print('Should be: Point(20.0, 60.0)')
+    print('Actual is:', p1.halfway_to(p2))
+    print('Should be: Point(20.0, 60.0)')
+    print('Actual is:', p2.halfway_to(p1))
+
+    print()
+    print('Should be: Point(10.0, 20.0)')
+    print('Actual is:', p1.halfway_to(p1))
+
+    p3 = Point(-10, 20)
+    p4 = Point(30, -100)
+
+    print()
+    print('Should be: Point(10.0, -40.0)')
+    print('Actual is:', p3.halfway_to(p4))
+    print('Should be: Point(10.0, -40.0)')
+    print('Actual is:', p3.halfway_to(p4))
+
+    print()
+    print('Should be: Point(-10.0, 20.0)')
+    print('Actual is:', p3.halfway_to(p3))
+
 
 
 # ------------------------------------------------------------------------------
